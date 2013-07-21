@@ -1,6 +1,6 @@
 {
   "name": "sortable-hash",
-  "description": "",
+  "description": "Hash arrays of numbers into sortable strings with variable precision loss",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "tape": "~1.0.4"
   },
   "keywords": [
-    ""
+    "hash", "geohash", "sortable"
   ],
   "author": {
     "name": "Julian Gruber",
