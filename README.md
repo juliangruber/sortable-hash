@@ -1,4 +1,6 @@
 
+# sortable-hash
+
 Hash arrays of numbers into a string from which you can reconstruct the
 original values, with configurable precision loss. The generated hashes
 **sort well**, so similar input values cause large shared prefixes in hashes.
