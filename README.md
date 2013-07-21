@@ -10,6 +10,10 @@ encode([10, 10, 10]) == 'w07w1z0gs3y0';
 encode([10, 11, 10]) == 'w07x1e1cs2yk';
 ```
 
+[![build status](https://secure.travis-ci.org/juliangruber/sortable-hash.png)](http://travis-ci.org/juliangruber/sortable-hash)
+
+[![testling badge](https://ci.testling.com/juliangruber/sortable-hash.png)](https://ci.testling.com/juliangruber/sortable-hash)
+
 ## Usage
 
 Hash the array `[10, -10, 10]` and then restore it, using differend
