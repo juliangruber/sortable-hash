@@ -18,6 +18,22 @@ test('integration', function (t) {
   t.deepEqual(i(decode(encode([10, -10, 10], 6), 3)), [10, -10, 10]);
 });
 
+test('integration base16', function (t) {
+  t.plan(9);
+
+  t.deepEqual(i(decode(encode([10], {base: 16}), {num: 1, base: 16})), [10]);
+  t.deepEqual(i(decode(encode([10], {precision: 24, base: 16}), {num: 1, base: 16})), [10]);
+  t.deepEqual(i(decode(encode([10], {precision: 6, base: 16}), {num: 1, base: 16})), [10]);
+
+  t.deepEqual(i(decode(encode([10, -10], {base: 16}), {num: 2, base: 16})), [10, -10]);
+  t.deepEqual(i(decode(encode([10, -10], {precision: 24, base: 16}), {num: 2, base: 16})), [10, -10]);
+  t.deepEqual(i(decode(encode([10, -10], {precision: 6, base: 16}), {num: 2, base: 16})), [10, -10]);
+
+  t.deepEqual(i(decode(encode([10, -10, 10], {base: 16}), {num: 3, base: 16})), [10, -10, 10]);
+  t.deepEqual(i(decode(encode([10, -10, 10], {precision: 24, base: 16}), {num: 3, base: 16})), [10, -10, 10]);
+  t.deepEqual(i(decode(encode([10, -10, 10], {precision: 6, base: 16}), {num: 3, base: 16})), [10, -10, 10]);
+});
+
 function i (arr) {
   return arr.map(function (e) {
     return Math.round(e);
