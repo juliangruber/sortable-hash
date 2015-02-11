@@ -1,21 +1,49 @@
-var bits = [16, 8, 4, 2, 1];
-var base32 = '0123456789bcdefghjkmnpqrstuvwxyz';
+var bases = {
+  2: {
+    chars: '01',
+    bits: [1]
+  },
+  4: {
+    chars: '0123',
+    bits: [2, 1]
+  },
+  8: {
+    chars: '01234567',
+    bits: [4, 2, 1]
+  },
+  16: {
+    chars: '0123456789abcdef',
+    bits: [8, 4, 2, 1]
+  },
+  32: {
+    chars: '0123456789bcdefghjkmnpqrstuvwxyz',
+    bits: [16, 8, 4, 2, 1]
+  }
+};
 
 var Hash = {};
 
-Hash.decode = function (hash, num) {
-  if (typeof num == 'undefined') throw new Error('`num` required');
+Hash.decode = function (hash, opts) {
+  if (typeof opts == 'undefined') throw new Error('`num` or `opts` argument required');
+  if (typeof opts == 'number') {
+    opts = { num: opts };
+  }
+
+  var num = opts.num;
+  var base = opts.base || 32;
+  if(typeof bases[base] !== 'object') throw new Error('invalid base');
+  var b = bases[base];
 
   var ranges = [];
   for (var i = 0; i < num; i++) {
     ranges[i] = [-100, 100];
   }
   var id = 0;
-  
+
   for (var i = 0; i < hash.length; i++) {
-    for (var j = 0; j < bits.length; j++) {
+    for (var j = 0; j < b.bits.length; j++) {
       var range = ranges[id++ % ranges.length];
-      var side = base32.indexOf(hash[i]) & bits[j]
+      var side = b.chars.indexOf(hash[i]) & b.bits[j]
         ? 0
         : 1;
       range[side] = avg(range);
@@ -38,6 +66,9 @@ Hash.encode = function (values, opts) {
   var bit = 0;
   var ch = 0;
   var precision = opts.precision || 12;
+  var base = opts.base || 32;
+  if(typeof bases[base] !== 'object') throw new Error('invalid base');
+  var b = bases[base];
 
   var ranges = [];
   for (var i = 0; i < values.length; i++) {
@@ -57,16 +88,16 @@ Hash.encode = function (values, opts) {
     var mid = avg(range);
 
     if (value > mid) {
-      ch |= bits[bit];
+      ch |= b.bits[bit];
       range[0] = mid;
     } else {
       range[1] = mid;
     }
 
-    if (bit < 4) {
+    if (bit < b.bits.length - 1) {
       bit++;
     } else {
-      hash += base32[ch];
+      hash += b.chars[ch];
       bit = 0;
       ch = 0;
     }
