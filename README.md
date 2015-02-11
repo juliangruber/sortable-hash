@@ -44,9 +44,10 @@ sortable.decode(biggerHash, 3);
 Hash the array `values`, which may only contain Numbers in the range of
 `[-100, 100]`.
 
-`options` can either be an object with those possible keys:
+`options` can either be an object with these possible keys:
 
 * `precision`: Length of the resulting hash
+* `base`: Number base for hash (i.e. limits the bits per character). One of 2,4,8,16, or 32 (default)
 
 or a Number, in which case it sets `options.precision`.
 
@@ -54,10 +55,16 @@ or a Number, in which case it sets `options.precision`.
 encode([10], 13) === encode([10], { precision: 13 });
 ```
 
-### sortable.decode(string, numValues)
+### sortable.decode(string, options)
 
-Decode `string` into an Array of Numbers. `numValues` needs to be the number
-of elements initially passed to `hash.encode`.
+Decode `string` into an Array of Numbers.
+
+`options` can either be an object with these possible keys:
+
+* `num`: number of elements initially passed to `hash.encode`. (required)
+* `base`: Number base for hash (i.e. limits the bits per character). One of 2,4,8,16, or 32 (default)
+
+Or a Number, in which case it sets `options.num` 
 
 ## Installation
 
